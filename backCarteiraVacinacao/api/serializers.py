@@ -2,6 +2,7 @@ from .models import *
 from rest_framework import serializers
 from drf_writable_nested import WritableNestedModelSerializer
 
+# ------------------------------------------------------------------------------
 
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,29 +15,46 @@ class RegistroSerializer(WritableNestedModelSerializer):
         fields = '__all__'
         extra_kwargs = {'password': {'write_only': True}}
 
+# ------------------------------------------------------------------------------
+
 class ProfissionalSerializer(serializers.ModelSerializer):
     usuario = UsuarioSerializer(many=False, read_only=True)
     class Meta:
         model = Profissional
         fields = '__all__'
+# ------------------------------------------------------------------------------
+
 class PacienteSerializer(serializers.ModelSerializer):
     usuario = UsuarioSerializer(many=False, read_only=True)
     class Meta:
         model = Paciente
         fields = '__all__'
+
+class AgendamentoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Agendamento
+        fields = '__all__'
+
+
+# ------------------------------------------------------------------------------
 class CoordenadorSerializer(serializers.ModelSerializer):
     usuario = UsuarioSerializer(many=False, read_only=True)
-
     class Meta:
         model = Coordenador
         fields = '__all__'
-
-# SERIALIZE BASICO
 
 class VacinaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vacina
         fields = '__all__'
+
+class AplicacaoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Aplicacao
+        fields = '__all__'
+
+# ------------------------------------------------------------------------------
+
 
 
 class MunicipioSerializer(serializers.ModelSerializer):

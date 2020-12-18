@@ -23,11 +23,6 @@ class Municipio(models.Model):
     Codigo_Municipio = models.CharField(max_length=100)
     Nome_Municipio = models.CharField(max_length=1000)
     
-
-class Vacina(models.Model):
-    nome = models.CharField(max_length=255)
-    quantidade = models.IntegerField(null=True)
-         
 class Estabelecimento(models.Model):
     cnes = models.CharField(max_length=12, verbose_name=u'Código CNES', unique=True)
     nome = models.CharField(max_length=60)
@@ -39,7 +34,20 @@ class Estabelecimento(models.Model):
     email = models.CharField(max_length=100, verbose_name=u'Email', null=True, blank=True)
     complemento = models.CharField(max_length=255, verbose_name=u'Complemento', null=True, blank=True)
     bairro = models.CharField(max_length=60, verbose_name=u'Bairro', null=True, blank=True)
-    vacinas = models.ManyToManyField(Vacina, verbose_name=u"Vacinas do Estabelecimento")
+class Vacina(models.Model):
+    nome = models.CharField(max_length=255)
+
+class Profissional(models.Model):
+    usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE, related_name='profissional_usuario')
+    estabelecimento = models.ForeignKey(Estabelecimento, on_delete=models.CASCADE)
+
+
+class vacina_estabelecimento(models.Model):
+    vacina = models.ForeignKey(Vacina, on_delete=models.CASCADE)
+    quantidade = models.IntegerField()
+    estabelecimento = models.ForeignKey(Estabelecimento, on_delete=models.CASCADE)
+         
+
 
 class Paciente(models.Model):
     usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE, related_name='paciente_usuario')
@@ -48,19 +56,25 @@ class CarteiraVacinacao(models.Model):
     usuario = models.OneToOneField(Paciente, on_delete=models.CASCADE,  related_name='paciente_carteira')
 
 class Aplicacao(models.Model):
-    vacina = models.ForeignKey(Vacina, on_delete=models.SET_NULL, null=True, related_name='vacina_carteira')
-    carteiraVacinacao = models.ForeignKey(CarteiraVacinacao, on_delete=models.SET_NULL, null=True)
-    data_aplicacao = models.DateField(null=True)
+    vacina = models.ForeignKey(Vacina, on_delete=models.CASCADE, null=False, related_name='vacina_carteira')
+    carteiraVacinacao = models.ForeignKey(CarteiraVacinacao, on_delete=models.CASCADE)
+    data_aplicacao = models.DateField()
+    profissional = models.ForeignKey(Profissional, on_delete=models.CASCADE)
+    estabelecimento = models.ForeignKey(Estabelecimento, on_delete=models.SET_NULL, null=True) 
 
 class Coordenador(models.Model):
     usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE, related_name='coordenador_usuario')
 
 
-class Profissional(models.Model):
-    usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE, related_name='profissional_usuario')
-    estabelecimento = models.ForeignKey(Estabelecimento, on_delete=models.SET_NULL, null=True, blank=True)
-
-
-
 class Agendamento(models.Model):
-    paciente = models.ForeignKey(Paciente, on_delete=models.SET_NULL, null=True, blank=True)
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
+    estabelecimento = models.ForeignKey(Estabelecimento, on_delete=models.CASCADE)
+    data = models.DateField()
+    hora = models.TimeField()
+    aberto = models.BooleanField(default=True)
+
+class log_entrada(models.Model):
+    profissional = models.ForeignKey(Profissional, on_delete=models.CASCADE)
+    quantidade_entrada = models.IntegerField()
+    vacina = models.ForeignKey(Vacina, on_delete=models.CASCADE)
+    estabelecimento = models.ForeignKey(Estabelecimento, on_delete=models.CASCADE) 

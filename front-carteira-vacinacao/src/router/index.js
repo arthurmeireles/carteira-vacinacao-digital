@@ -2,12 +2,14 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import login from '../components/paginasGerais/login';
 import Cadastro  from '../components/paginasGerais/cadastro';
+import paginaInicial from '../components/paginasGerais/paginaInicial'
 
 
 
 Vue.use(Router)
 const routes = [
-    { path: '/', redirect: '/login' },
+    { path: '/paginaInicial', name:'paginaInicial', redirect: '/' },
+    { path: '/', name:'paginaInicial', component: paginaInicial },
     {
         path: '/login', name: 'login', component: login,
         meta: {

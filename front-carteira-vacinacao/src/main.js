@@ -8,8 +8,10 @@ import { faFire, faCloudUploadAlt, faPlus, faUser, faSmileWink, faStoreAlt, faSo
 Vue.component('FontAwesomeIcon', FontAwesomeIcon);
 library.add(faFire, faCloudUploadAlt, faPlus, faUser, faSmileWink, faStoreAlt, faSortAmountDown, faEllipsisV, faCog, faTrash, faUserPlus)
 // -------------------------------------------------------
+
 import VueSweetalert2 from 'vue-sweetalert2';
 Vue.use(VueSweetalert2);
+
 // CONFIGURO O BOOTSTRAP
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 Vue.use(BootstrapVue)

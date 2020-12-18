@@ -1,61 +1,70 @@
 <template>
-    <div>
-        <div class="text-center">
-            <a href="index.html" class="logo-lg"><i class="mdi mdi-radar"></i> <span>Minton</span> </a>
+    <div id="estrutura">
+        <div class="col-lg-4 col-md-5 col-sm-12">
+            <div class="card">
+                <div class="card-body">                        
+                    <img src="" alt="" srcset="">
+
+                    <form action="">
+                        <div class="form-group">
+                            <label class="w-100 text-left" for="exampleInputEmail1">Nome de Usuario:</label>
+                            <input type="text" class="form-control" id="inputUsername" v-model="usuario.username" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label class="w-100 text-left" for="exampleInputEmail1">Senha:</label>
+                            <input type="password" class="form-control" id="inputPassword" v-model="usuario.password" placeholder="">
+                        </div>
+                    </form>
+
+                    <div>
+                        <button class="btn-primary btn float-left" type="submit" @click="logarUsuario">Enviar</button>
+                    </div>
+
+                </div>
+            </div>
         </div>
-
-        <form class="form-horizontal m-t-20" action="index.html">
-
-            <div class="form-group row">
-                <div class="col-12">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="mdi mdi-account"></i></span>
-                        </div>
-                        <input class="form-control" type="text" required="" placeholder="Username"/>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-12">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="mdi mdi-key"></i></span>
-                        </div>
-                        <input class="form-control" type="password" required="" placeholder="Password"/>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-12">
-                    <div class="checkbox checkbox-primary">
-                        <input id="checkbox-signup" type="checkbox">
-                        <label for="checkbox-signup">
-                            Remember me
-                        </label>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="form-group text-right m-t-20">
-                <div class="col-xs-12">
-                    <button class="btn btn-primary btn-custom w-md waves-effect waves-light" type="submit">Log In
-                    </button>
-                </div>
-            </div>
-
-            <div class="form-group row m-t-30">
-                <div class="col-sm-7">
-                    <a href="pages-recoverpw.html" class="text-muted"><i class="fa fa-lock m-r-5"></i> Forgot your
-                        password?</a>
-                </div>
-                <div class="col-sm-5 text-right">
-                    <a href="pages-register.html" class="text-muted">Create an account</a>
-                </div>
-            </div>
-        </form>
     </div>
+
+
 </template>
+
+<script>
+import serviceLogin from '@/service/serviceLogin'
+import axios from 'axios'
+
+export default {
+    name: 'Login',
+    data() {
+        return {
+            usuario: {
+                username: '',
+                password: ''
+            }
+        }
+    },
+    methods:{
+        logarUsuario: function(){
+            serviceLogin.login(this.usuario).then(resposta => {
+                console.log(resposta.data)
+                if(resposta.status == 200){
+                    console.log("Logou")
+                    localStorage.setItem('token', resposta.data.token)
+                    axios.defaults.headers.common['Authorization'] = 'Token '+resposta.data.token ;
+                    this.$router.push({name: 'paginaInicial'})
+                    this.$emit('buscaUsuario')
+                }
+            }).catch(
+                (error) =>{
+                    this.$swal.fire(
+                        'Oops...',
+                        'Tivemos um problema, tente novamente!',
+                        'error',
+                    )
+                    console.log(error)
+                }
+            )
+        }
+
+    }
+}
+</script>
