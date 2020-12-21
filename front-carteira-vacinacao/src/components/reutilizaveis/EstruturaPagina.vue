@@ -1,5 +1,7 @@
 <template>
-    <div id="estrutura">
+    <div id="estrutura">        
+        <Navbar/>
+
 
         <router-view :usuario="usuario"></router-view> 
 
@@ -7,10 +9,20 @@
 </template>
 
 
-
+<style scoped>
+    #estrutura{
+        flex-direction: column;
+    }
+</style>
 <script>
+import Navbar from './Navbar'
+
+
 export default {
     name: 'EstruturaPagina',
+        components: {
+            Navbar
+        },
     data(){
         return{
             usuario: ''

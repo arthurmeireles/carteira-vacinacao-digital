@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+
+
 // -------------------------------------------------------
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -17,10 +19,16 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 
+
+import Select2 from 'v-select2-component';
+Vue.component('Select2', Select2);
+
+
 // ------------------------------
 Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
-  router
+  router,
+  Select2
 }).$mount('#app')

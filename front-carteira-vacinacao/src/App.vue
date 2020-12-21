@@ -2,31 +2,30 @@
         <div id="app">
 
             <router-view></router-view> 
-        </div>
-</template>
 
-<script src="./assets/js/jquery.min.js"></script>
-<script src="./assets/js/jquery.app.js"></script>
-<script src="./assets/js/jquery.blockUI.js"></script>
-<script src="./assets/js/bootstrap.min.js"></script>
-<script src="./assets/js/detect.js"></script>
-<script src="./assets/js/fastclick.js"></script>
+
+        </div>
+
+
+</template>
 
 
 
 
 <script>
+
     import './assets/css/style.css'
+    import './assets/css/myStyle.css'
+
     import './assets/css/style1.css'
     import './assets/css/style_dark.css'
     import './assets/css/icons.css'
-    import './assets/css/myStyle.css'
 
 
+    // import './assets/css/bootstrap.min.css'
 
 
-
-    export default {
+export default {
         name: 'App',
     }
 </script>
