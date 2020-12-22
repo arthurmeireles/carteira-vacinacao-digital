@@ -10,7 +10,6 @@ Automat==20.2.0
 beautifulsoup4==4.9.0
 billiard==3.6.3.0
 bleach==2.1.2
-Brlapi==0.6.6
 cachetools==4.1.0
 cairocffi===file-.cairocffi-VERSION
 CairoSVG==2.4.2
