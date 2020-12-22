@@ -1,1 +1,1 @@
-web: gunicorn carteira-vacinacao.wsgi
+web: gunicorn carteira-vacinacao-lais.wsgi
