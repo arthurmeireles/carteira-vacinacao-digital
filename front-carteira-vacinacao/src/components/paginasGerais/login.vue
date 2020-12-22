@@ -77,6 +77,8 @@ export default {
 
                     axios.defaults.headers.common['Authorization'] = 'Token '+resposta.data.token ;
                     this.$router.push({name: 'dashboard'})
+                    $emit
+
                 }
             }).catch(
                 (error) =>{
