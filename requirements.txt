@@ -75,7 +75,7 @@ Jinja2==2.10
 jsonschema==2.6.0
 jupyter-client==5.2.2
 jupyter-core==4.4.0
-kazam==1.4.5
+kazam==1.5.5
 keyring==10.6.0
 keyrings.alt==3.0
 kombu==4.6.10
