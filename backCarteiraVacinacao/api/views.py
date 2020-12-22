@@ -1,12 +1,15 @@
 from django.shortcuts import render
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
+from django.http import HttpResponse
 
 
 from rest_framework.filters import SearchFilter
 from rest_framework.viewsets import ViewSet
 
 import django_filters.rest_framework
+import csv
+from api.consulta import SqlBloc
 
 from .models import *
 from .pagination import *
@@ -367,3 +370,16 @@ class buscarEstabelecimentoPorCNES(APIView):
 #     pagination_class = PaginationDefault
 #     filter_backends = (SearchFilter,)
 #     search_fields = ['username', 'nome', 'cpf']
+
+def relatorio_view(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="relatorio.csv"'
+
+    dados = SqlBloc.relatorio_vacinas_aplicadas_em_todos_estabelecimentos()
+    cabecalho = dados[0].keys()
+
+    writer = csv.DictWriter(response, fieldnames=cabecalho)
+    writer.writeheader()
+    writer.writerows(dados)
+
+    return response

@@ -59,5 +59,6 @@ urlpatterns = [
 
     path('query/<str:nome>', pegaQuery.as_view()),
 
+    path('relatorio', relatorio_view)
 
 ]

@@ -13,12 +13,19 @@
                 <li class="nav-item">
                     <router-link class="nav-link" to="usuarios">Adicionar Usuarios</router-link>
                 </li>
+
                 <li class="nav-item">
-                    <router-link class="nav-link" to="relatorios">Relatório</router-link>
-                </li>
-                    <li class="nav-item">
                     <router-link class="nav-link" to="agendarVacina">Agendar Vacinação</router-link>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Relatório
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" type="button" @click="baixarRelatorio">Baixar Relatório de Aplicações</a>
+                    </div>
+                </li>
+                
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Vinculos
@@ -35,7 +42,15 @@
 </template>
 
 <script>
+
+import serviceAgendamentos from "@/service/serviceAgendamentos"
 export default {
-    
+    methods: {
+        baixarRelatorio: function(){
+            serviceAgendamentos.baixarRelatorio().then(resposta=>{
+                resposta.data
+            })
+        }
+    },
 }
 </script>

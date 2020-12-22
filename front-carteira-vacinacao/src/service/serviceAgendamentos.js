@@ -22,4 +22,10 @@ export default {
     getAgendamentosPaciente: (usuarioId) => {
         return API.get(`/agendamentoPaciente/${usuarioId}`)
     },
+
+
+
+    baixarRelatorio: () => {
+        window.location.href='http://localhost:8000/api/relatorio'
+    }
 }
