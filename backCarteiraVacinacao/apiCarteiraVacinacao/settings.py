@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'd4f1a078795f2ee8ef0ee91e2b7d81ed9bcf14ddd277ace3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG') == True
 
 ALLOWED_HOSTS = []
 
@@ -134,6 +135,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfile')
+
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
@@ -142,3 +146,6 @@ REST_FRAMEWORK = {
 
 }
 CORS_ORIGIN_ALLOW_ALL = True
+
+ALLOWED_HOSTS = ['https://carteira-vacinacao-lais']
+django_heroku.settings(locals())
